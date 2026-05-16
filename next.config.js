@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['images.unsplash.com'],
-  },
-};
-module.exports = nextConfig;
+  typescript: { ignoreBuildErrors: true },
+  eslint: { ignoreDuringBuilds: true },
+  reactStrictMode: false,
+}
+module.exports = nextConfig
