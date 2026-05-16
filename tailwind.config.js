@@ -1,22 +1,19 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
   darkMode: ["class"],
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./lib/**/*.{js,ts,jsx,tsx}"],
+  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        border: "hsl(var(--border, 214.3 31.8% 91.4%))",
-        input: "hsl(var(--input, 214.3 31.8% 91.4%))",
-        background: "hsl(var(--background, 0 0% 100%))",
-        foreground: "hsl(var(--foreground, 222.2 84% 4.9%))",
-        primary: { DEFAULT: "#6366f1", foreground: "#ffffff" },
-        secondary: { DEFAULT: "#8b5cf6", foreground: "#ffffff" },
-        destructive: { DEFAULT: "#ef4444", foreground: "#ffffff" },
-        muted: { DEFAULT: "#f1f5f9", foreground: "#64748b" },
-        accent: { DEFAULT: "#f8fafc", foreground: "#0f172a" },
+        border:"hsl(var(--border,214.3 31.8% 91.4%))",
+        input:"hsl(var(--input,214.3 31.8% 91.4%))",
+        background:"hsl(var(--background,0 0% 100%))",
+        foreground:"hsl(var(--foreground,222.2 84% 4.9%))",
+        primary:{ DEFAULT:"hsl(var(--primary,221.2 83.2% 53.3%))", foreground:"hsl(var(--primary-foreground,210 40% 98%))" },
+        muted:{ DEFAULT:"hsl(217.2 32.6% 17.5%)", foreground:"hsl(215 20.2% 65.1%)" },
       },
-      borderRadius: { lg: "0.5rem", md: "0.375rem", sm: "0.25rem" },
-    },
+      borderRadius: { lg:"var(--radius,0.5rem)", md:"calc(var(--radius,0.5rem) - 2px)", sm:"calc(var(--radius,0.5rem) - 4px)" }
+    }
   },
-  plugins: [],
+  plugins: []
 }
