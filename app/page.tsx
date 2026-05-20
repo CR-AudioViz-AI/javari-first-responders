@@ -4,7 +4,7 @@
 // CR AudioViz AI, LLC · EIN 39-3646201 · May 2026
 'use client'
 import { useState } from 'react'
-import { ACTIONS, FIELDS } from '@/lib/tool-data'
+import { ACTIONS, getFields } from '@/lib/tool-data'
 
 
 export default function FirstRespondersPage() {
@@ -38,7 +38,7 @@ export default function FirstRespondersPage() {
     setLoading(false)
   }
 
-  const fields = FIELDS[action.id] || []
+  const fields = getFields(action.id) || []
 
   return (
     <div style={{ background: '#020b18', minHeight: '100vh', color: '#e2eaf5', fontFamily: 'DM Sans, system-ui, sans-serif' }}>
