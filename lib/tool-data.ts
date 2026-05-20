@@ -2,7 +2,7 @@
 // Tool definitions extracted from page.tsx to keep JSX parser clean
 // CR AudioViz AI · May 2026
 
-const ACTIONS = [
+export const ACTIONS = [
   { id: 'mental_health_resources', label: '🧠 Mental Health Support',  desc: 'Resources, coping strategies, and crisis support',      category: 'wellness', prompt: (v) => `As a mental health resource for first responders, provide comprehensive support for: ${v.situation || 'general mental health and stress management'}. Include: immediate coping strategies, PTSD awareness, peer support resources, professional help guidance, and crisis contacts. Role: ${v.role || 'first responder'}.` },
   { id: 'benefits_guide',         label: '📋 Benefits Navigator',      desc: 'Navigate your benefits, disability, and compensation',  category: 'career',   prompt: (v) => `Create a detailed benefits guide for a ${v.role || 'first responder'} in ${v.state || 'the United States'}. Cover: health insurance options, disability benefits, line-of-duty death benefits, retirement planning, PTSD/mental health benefits, and how to file claims. Agency type: ${v.agency || 'municipal'}.` },
   { id: 'incident_report',        label: '📝 Incident Report',         desc: 'Professional incident report from your notes',          category: 'admin',    prompt: (v) => `Write a professional incident report based on these notes: ${v.notes || ''}. Format it properly with: Date/Time, Location, Units Responding, Incident Type, Actions Taken, Outcomes, and Follow-up Required. Role: ${v.role || 'officer'}.` },
@@ -12,7 +12,7 @@ const ACTIONS = [
 ]
 
 
-const FIELDS = {
+export const FIELDS = {
   mental_health_resources: [{ id: 'role', label: 'Your Role', placeholder: 'Firefighter, EMT, Police Officer...' }, { id: 'situation', label: 'Situation or Concern', placeholder: 'Dealing with PTSD after a critical incident...' }],
   benefits_guide:         [{ id: 'role', label: 'Your Role', placeholder: 'Police Officer, Firefighter, Paramedic...' }, { id: 'state', label: 'State', placeholder: 'Florida' }, { id: 'agency', label: 'Agency Type', placeholder: 'Municipal, County, State, Federal' }],
   incident_report:        [{ id: 'role', label: 'Your Role', placeholder: 'Officer, Firefighter, EMT...' }, { id: 'notes', label: 'Your Notes', placeholder: 'Paste your incident notes here...', type: 'textarea' }],
@@ -25,4 +25,8 @@ const CATEGORY_COLORS = {
   wellness: '#3b82f6',
   career: '#10b981',
   admin: '#f59e0b',
+}
+
+export function getFields(actionId) {
+  return FIELDS[actionId] || []
 }
