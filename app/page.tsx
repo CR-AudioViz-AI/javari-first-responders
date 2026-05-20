@@ -20,7 +20,7 @@ export default function FirstRespondersPage() {
     try {
       const res = await fetch('/api/generate', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: actionId, input: action.buildPrompt(values) }),
+        body: JSON.stringify({ action: actionId, input: (actions.find(a => a.id === actionId) || actions[0]).buildPrompt(values) }),
       })
       const data = await res.json()
       if (!res.ok || data.error) throw new Error(data.error || 'Generation failed')
@@ -28,9 +28,6 @@ export default function FirstRespondersPage() {
     } catch (e) { setError(e.message || 'Something went wrong') }
     setLoading(false)
   }
-
-  const action = actions.find(a => a.id === actionId)
-  const fields = getFields(actionId)
 
   return (
     <div style={{ background: '#020b18', minHeight: '100vh', color: '#e2eaf5', fontFamily: 'system-ui, sans-serif' }}>
@@ -61,7 +58,7 @@ export default function FirstRespondersPage() {
             ))}
           </div>
           <div style={{ background: '#0a1628', border: '1px solid rgba(59,130,246,0.12)', borderRadius: 14, padding: '16px' }}>
-            {(fields.fields || []).map(f => (
+            {(getFields(actionId).fields || []).map(f => (
               <div key={f.id} style={{ marginBottom: 12 }}>
                 <label style={{ display: 'block', fontSize: 12, color: '#64748b', marginBottom: 5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{f.label}</label>
                 {f.type === 'textarea' ? (
@@ -75,7 +72,7 @@ export default function FirstRespondersPage() {
             ))}
             <button onClick={generate} disabled={loading}
               style={{ width: '100%', background: loading ? '#0f2040' : 'linear-gradient(135deg,#2563eb,#1d4ed8)', color: loading ? '#334155' : 'white', border: 'none', borderRadius: 10, padding: '12px', fontSize: 14, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', marginTop: 4 }}>
-              {loading ? 'Generating...' : 'Generate ' + (action ? action.label : '')}
+              {loading ? 'Generating...' : 'Generate ' + (actions.find(a => a.id === actionId) ? actions.find(a => a.id === actionId).label : '')}
             </button>
             {error && <p style={{ color: '#ef4444', fontSize: 12, marginTop: 8 }}>⚠ {error}</p>}
           </div>
