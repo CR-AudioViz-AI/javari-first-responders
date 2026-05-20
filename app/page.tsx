@@ -65,7 +65,7 @@ export default function FirstRespondersPage() {
   const fields = FIELDS[action.id] || []
 
   return (
-    <div style={{ background: '#020b18', minHeight: '100vh', color: '#e2eaf5', fontFamily: '"DM Sans", system-ui, sans-serif' }}>
+    <div style={{ background: '#020b18', minHeight: '100vh', color: '#e2eaf5', fontFamily: 'DM Sans, system-ui, sans-serif' }}>
       {/* NAV */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(2,11,24,0.97)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(59,130,246,0.15)', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 28px' }}>
         <a href="https://craudiovizai.com" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
