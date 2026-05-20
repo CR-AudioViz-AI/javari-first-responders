@@ -14,7 +14,7 @@ const ACTIONS = [
   { id: 'peer_support',           label: '🤝 Peer Support Script',     desc: 'How to support a colleague after a critical incident', category: 'wellness', prompt: (v: V) => `Write a peer support guide and conversation script for helping a ${v.role || 'first responder'} colleague after: ${v.incident || 'a critical incident'}. Include: what to say and not say, warning signs of PTSD, when to escalate to professional help, and local support resources.` },
 ]
 
-type V = Record<string, string>
+interface V { [key: string]: string }
 
 const FIELDS: Record<string, Array<{ id: string; label: string; placeholder: string; type?: string }>> = {
   mental_health_resources: [{ id: 'role', label: 'Your Role', placeholder: 'Firefighter, EMT, Police Officer...' }, { id: 'situation', label: 'Situation or Concern', placeholder: 'Dealing with PTSD after a critical incident...' }],
@@ -33,7 +33,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default function FirstRespondersPage() {
   const [action, setAction] = useState(ACTIONS[0])
-  const [values, setValues] = useState<V>({})
+  const [values, setValues] = useState({})
   const [output, setOutput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
