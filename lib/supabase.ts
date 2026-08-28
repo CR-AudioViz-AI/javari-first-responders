@@ -1,9 +1,10 @@
 // lib/supabase.ts — CR AudioViz AI Platform Standard  May 16 2026
 import { createClient as _create } from "@supabase/supabase-js"
+import { secretKey, publishableKey, supabaseUrl } from "@craudioviz/platform-sdk";
 
-const URL  = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-const SVC  = process.env.SUPABASE_SERVICE_ROLE_KEY ?? ANON
+const URL  = supabaseUrl()
+const ANON = publishableKey()
+const SVC  = secretKey() ?? ANON
 
 export const supabase       = _create(URL, ANON)
 export const supabaseAdmin  = _create(URL, SVC, { auth: { persistSession: false } })
