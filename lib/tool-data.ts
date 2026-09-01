@@ -20,6 +20,16 @@ export interface ToolAction {
   id: string;
   label: string;
   desc: string;
+  /**
+   * 2026-09-01: buildPrompt was missing from my first version of this type, and its
+   * absence produced six errors — the object literals carry it and the type did not.
+   *
+   * It takes the collected field values keyed by field id and returns the prompt
+   * sent to the model. Typed as Record<string, string> rather than any: these values
+   * come straight from a form filled in by a first responder, and the prompt built
+   * from them becomes an incident report or a benefits filing.
+   */
+  buildPrompt: (v: Record<string, string>) => string;
 }
 
 export interface FieldGroup {
@@ -28,12 +38,12 @@ export interface FieldGroup {
 }
 export function getActions(): ToolAction[] {
   return [
-    { id: 'mental_health_resources', label: '🧠 Mental Health Support',  desc: 'Resources, coping strategies, and crisis support',     buildPrompt: function(v) { return 'As a mental health resource for first responders, provide comprehensive support for: ' + (v.situation || 'general mental health and stress management') + '. Include immediate coping strategies, PTSD awareness, peer support resources, professional help guidance, and crisis contacts. Role: ' + (v.role || 'first responder') + '.' } },
-    { id: 'benefits_guide',          label: '📋 Benefits Navigator',      desc: 'Navigate benefits, disability, and compensation',       buildPrompt: function(v) { return 'Create a detailed benefits guide for a ' + (v.role || 'first responder') + ' in ' + (v.state || 'the United States') + '. Cover: health insurance, disability benefits, line-of-duty death benefits, retirement planning, PTSD/mental health benefits, and how to file claims. Agency type: ' + (v.agency || 'municipal') + '.' } },
-    { id: 'incident_report',         label: '📝 Incident Report',         desc: 'Professional incident report from your notes',          buildPrompt: function(v) { return 'Write a professional incident report based on these notes: ' + (v.notes || '') + '. Format with: Date/Time, Location, Units Responding, Incident Type, Actions Taken, Outcomes, and Follow-up Required. Role: ' + (v.role || 'officer') + '.' } },
-    { id: 'career_development',      label: '🎯 Career Development',      desc: 'Promotion prep, civilian transition, or advancement',   buildPrompt: function(v) { return 'Create a career development plan for a ' + (v.role || 'first responder') + ' with ' + (v.experience || '5') + ' years experience. Goal: ' + (v.goal || 'promotion to supervisor') + '. Include: skills gap analysis, training recommendations, certification paths, leadership development, and 90-day action plan.' } },
-    { id: 'training_plan',           label: '🏋️ Training Plan',          desc: 'Physical and skills training program',                  buildPrompt: function(v) { return 'Design a complete training program for a ' + (v.role || 'firefighter/EMT/officer') + '. Include: physical fitness protocol, skills certification schedule, scenario training, mental resilience exercises, and injury prevention. Duration: ' + (v.duration || '12 weeks') + '.' } },
-    { id: 'peer_support',            label: '🤝 Peer Support Script',     desc: 'How to support a colleague after a critical incident', buildPrompt: function(v) { return 'Write a peer support guide and conversation script for helping a ' + (v.role || 'first responder') + ' colleague after: ' + (v.incident || 'a critical incident') + '. Include: what to say and not say, warning signs of PTSD, when to escalate to professional help, and local support resources.' } },
+    { id: 'mental_health_resources', label: '🧠 Mental Health Support',  desc: 'Resources, coping strategies, and crisis support',     buildPrompt: function(v: Record<string, string>) { return 'As a mental health resource for first responders, provide comprehensive support for: ' + (v.situation || 'general mental health and stress management') + '. Include immediate coping strategies, PTSD awareness, peer support resources, professional help guidance, and crisis contacts. Role: ' + (v.role || 'first responder') + '.' } },
+    { id: 'benefits_guide',          label: '📋 Benefits Navigator',      desc: 'Navigate benefits, disability, and compensation',       buildPrompt: function(v: Record<string, string>) { return 'Create a detailed benefits guide for a ' + (v.role || 'first responder') + ' in ' + (v.state || 'the United States') + '. Cover: health insurance, disability benefits, line-of-duty death benefits, retirement planning, PTSD/mental health benefits, and how to file claims. Agency type: ' + (v.agency || 'municipal') + '.' } },
+    { id: 'incident_report',         label: '📝 Incident Report',         desc: 'Professional incident report from your notes',          buildPrompt: function(v: Record<string, string>) { return 'Write a professional incident report based on these notes: ' + (v.notes || '') + '. Format with: Date/Time, Location, Units Responding, Incident Type, Actions Taken, Outcomes, and Follow-up Required. Role: ' + (v.role || 'officer') + '.' } },
+    { id: 'career_development',      label: '🎯 Career Development',      desc: 'Promotion prep, civilian transition, or advancement',   buildPrompt: function(v: Record<string, string>) { return 'Create a career development plan for a ' + (v.role || 'first responder') + ' with ' + (v.experience || '5') + ' years experience. Goal: ' + (v.goal || 'promotion to supervisor') + '. Include: skills gap analysis, training recommendations, certification paths, leadership development, and 90-day action plan.' } },
+    { id: 'training_plan',           label: '🏋️ Training Plan',          desc: 'Physical and skills training program',                  buildPrompt: function(v: Record<string, string>) { return 'Design a complete training program for a ' + (v.role || 'firefighter/EMT/officer') + '. Include: physical fitness protocol, skills certification schedule, scenario training, mental resilience exercises, and injury prevention. Duration: ' + (v.duration || '12 weeks') + '.' } },
+    { id: 'peer_support',            label: '🤝 Peer Support Script',     desc: 'How to support a colleague after a critical incident', buildPrompt: function(v: Record<string, string>) { return 'Write a peer support guide and conversation script for helping a ' + (v.role || 'first responder') + ' colleague after: ' + (v.incident || 'a critical incident') + '. Include: what to say and not say, warning signs of PTSD, when to escalate to professional help, and local support resources.' } },
   ]
 }
 
