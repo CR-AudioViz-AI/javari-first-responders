@@ -1,6 +1,32 @@
 // lib/tool-data.ts — javari-first-responders
 // CR AudioViz AI · May 2026
-export function getActions() {
+//
+// 2026-09-01: typed. Every callback parameter here was an implicit any and the map
+// lookup on line 23 was an untyped index — eight of this repo's nine errors.
+//
+// The types are named rather than inlined because these shapes ARE the tool: a form
+// field that loses its `id` renders an input nothing reads, and this app serves
+// first responders filling out incident reports and benefits paperwork.
+
+export interface ToolField {
+  id: string;
+  label: string;
+  placeholder?: string;
+  type?: string;
+  options?: string[];
+}
+
+export interface ToolAction {
+  id: string;
+  label: string;
+  desc: string;
+}
+
+export interface FieldGroup {
+  label: string;
+  fields: ToolField[];
+}
+export function getActions(): ToolAction[] {
   return [
     { id: 'mental_health_resources', label: '🧠 Mental Health Support',  desc: 'Resources, coping strategies, and crisis support',     buildPrompt: function(v) { return 'As a mental health resource for first responders, provide comprehensive support for: ' + (v.situation || 'general mental health and stress management') + '. Include immediate coping strategies, PTSD awareness, peer support resources, professional help guidance, and crisis contacts. Role: ' + (v.role || 'first responder') + '.' } },
     { id: 'benefits_guide',          label: '📋 Benefits Navigator',      desc: 'Navigate benefits, disability, and compensation',       buildPrompt: function(v) { return 'Create a detailed benefits guide for a ' + (v.role || 'first responder') + ' in ' + (v.state || 'the United States') + '. Cover: health insurance, disability benefits, line-of-duty death benefits, retirement planning, PTSD/mental health benefits, and how to file claims. Agency type: ' + (v.agency || 'municipal') + '.' } },
@@ -11,8 +37,8 @@ export function getActions() {
   ]
 }
 
-export function getFields(actionId) {
-  const map = {
+export function getFields(actionId: string): FieldGroup {
+  const map: Record<string, FieldGroup> = {
     mental_health_resources: { label: 'Your Situation', fields: [{ id: 'role', label: 'Your Role', placeholder: 'Firefighter, EMT, Police Officer...' }, { id: 'situation', label: 'Situation or Concern', placeholder: 'Dealing with PTSD after a critical incident...', type: 'textarea' }] },
     benefits_guide:          { label: 'Your Details', fields: [{ id: 'role', label: 'Your Role', placeholder: 'Police Officer, Firefighter...' }, { id: 'state', label: 'State', placeholder: 'Florida' }, { id: 'agency', label: 'Agency Type', placeholder: 'Municipal, County, State, Federal' }] },
     incident_report:         { label: 'Incident Details', fields: [{ id: 'role', label: 'Your Role', placeholder: 'Officer, Firefighter, EMT...' }, { id: 'notes', label: 'Your Notes', placeholder: 'Paste your incident notes here...', type: 'textarea' }] },
