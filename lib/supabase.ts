@@ -19,7 +19,7 @@ export async function getSession(client?: ReturnType<typeof createClient>) {
   return session
 }
 export async function logActivity(p: { userId?:string; action:string; details?:Record<string,unknown>; appId?:string }) {
-  try { await supabaseAdmin.from("activity_log").insert({ user_id: p.userId??"anon", action: p.action, details: p.details??{}, app_id: p.appId??"javari", created_at: new Date().toISOString() }) } catch {}
+  try { await supabaseAdmin.from("javari_activity_log").insert({ user_id: p.userId??"anon", action: p.action, details: p.details??{}, app_id: p.appId??"javari", created_at: new Date().toISOString() }) } catch {}
 }
 export async function getPartnerByUserId(userId: string) {
   const { data } = await supabaseAdmin.from("partners").select("*").eq("user_id", userId).single()
